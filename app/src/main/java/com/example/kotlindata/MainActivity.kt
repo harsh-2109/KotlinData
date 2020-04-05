@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 //        val monster=Monster("Harsh","Bla Bla Bla Bla Bla", "Yo yo yo", "My Description",30.20,2)
-//
 //        Log.i(LOG_VAL, monster.toString())
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
