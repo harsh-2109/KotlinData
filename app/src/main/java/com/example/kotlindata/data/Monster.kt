@@ -1,5 +1,6 @@
 package com.example.kotlindata.data
 
+import com.example.kotlindata.IMAGE_BASE_URL
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,3 +14,10 @@ data class Monster(
     val price: Double,
     val scariness: Int
 )
+{
+    val imageUrl
+    get() = "$IMAGE_BASE_URL/$imageFile.webp"
+
+    val thumbnilUrl
+    get() = "$IMAGE_BASE_URL/{$imageFile}_tn.webp"
+}

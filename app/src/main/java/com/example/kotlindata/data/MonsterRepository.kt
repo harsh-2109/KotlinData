@@ -3,8 +3,10 @@ package com.example.kotlindata.data
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
+import com.example.kotlindata.LOG_VAL
 import com.example.kotlindata.WEB_SERVICE_URL
 import com.squareup.moshi.Types
 import kotlinx.coroutines.CoroutineScope
@@ -20,15 +22,14 @@ class MonsterRepository(private val application: Application) {
 
     init {
 //        getMonsterData()
-        CoroutineScope(Dispatchers.IO).launch {
-            callWebService()
-        }
+        refreshData()
 //        Log.i(LOG_VAL,"Network available: ${networkAvailable()}")
     }
 
     @WorkerThread
     suspend fun callWebService() {
         if (networkAvailable()) {
+            Log.i(LOG_VAL,"Calling Web Service")
             val retrofit = Retrofit.Builder()
                 .baseUrl(WEB_SERVICE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
@@ -56,5 +57,11 @@ class MonsterRepository(private val application: Application) {
         val networkInfo = connectivityManager.activeNetworkInfo
 
         return networkInfo?.isConnectedOrConnecting ?: false
+    }
+
+    fun refreshData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            callWebService()
+        }
     }
 }
